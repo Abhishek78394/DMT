@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Dashboard from './screen/Dashboard';
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
 
         <Route path="/sign-up" element={<Register />} />
         <Route path="/" element={<Login />} />
+        <Route path="/profile" element={<Dashboard />} />
 
         {/* <Route path="/profile" element={<ProfileCard />} />
         <Route path="/account-settings" element={<Dashboard />} /> */}

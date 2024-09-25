@@ -3,40 +3,11 @@ import { Box, Container, TextField, Checkbox, Button, FormControlLabel, Typograp
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
-import { Link } from 'react-router-dom';
-
-// Reusable Modal Component
-const CustomModal = ({ open, onClose, title, content, actions }) => {
-  return (
-    <Modal
-      open={open}
-      onClose={onClose}
-      aria-labelledby="custom-modal-title"
-      aria-describedby="custom-modal-description"
-    >
-      <Box
-        sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: 400,
-          bgcolor: 'background.paper',
-          p: 4,
-          borderRadius: '8px',
-        }}
-      >
-        <Typography id="custom-modal-title" variant="h6" component="h2">
-          {title}
-        </Typography>
-        {content}
-        <Box mt={2}>
-          {actions}
-        </Box>
-      </Box>
-    </Modal>
-  );
-};
+import { Link, useNavigate } from 'react-router-dom';
+import OtpModal from '../components/OtpModal';
+import { maskEmailOrMobile } from '../utils/helpers';
+import { useDispatch } from 'react-redux';
+import { setRegisterData } from '../redux/reducers/authReducer';
 
 const Register = () => {
   const [formValues, setFormValues] = useState({
@@ -46,11 +17,11 @@ const Register = () => {
     confirmPassword: '',
     agreeTerms: false,
   });
+  const  navigate  = useNavigate();
+  const dispatch = useDispatch()
   const [formErrors, setFormErrors] = useState({});
-  const [otp, setOtp] = useState(''); // State for OTP input
-  const [otpModalOpen, setOtpModalOpen] = useState(false); // State for OTP modal visibility
+  const [otpModalOpen, setOtpModalOpen] = useState(false); 
 
-  // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({
@@ -59,7 +30,6 @@ const Register = () => {
     });
   };
 
-  // Handle checkbox change
   const handleCheckboxChange = (e) => {
     setFormValues({
       ...formValues,
@@ -67,7 +37,6 @@ const Register = () => {
     });
   };
 
-  // Validation logic
   const validate = () => {
     let errors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -88,25 +57,22 @@ const Register = () => {
     return errors;
   };
 
-  // Handle form submit
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const errors = validate();
     setFormErrors(errors);
-
     if (Object.keys(errors).length === 0) {
-      // If no errors, open the OTP modal
       console.log('Form is valid. Proceed with signup.', formValues);
-      setOtpModalOpen(true); // Open the OTP modal
+      setOtpModalOpen(true); 
     }
   };
 
-  // Handle OTP submit
-  const handleOtpSubmit = () => {
-    // Add logic to handle OTP submission (e.g., API call)
-    console.log('OTP Submitted:', otp);
-    setOtpModalOpen(false); // Close modal after successful OTP submission
+  const handleOtpSubmit = (otpValue) => {
+    console.log('OTP Submitted:', otpValue);
+    setOtpModalOpen(false); 
+    dispatch(setRegisterData(formValues));
+    console.log(formValues)
+    navigate('/')
   };
 
   return (
@@ -134,20 +100,18 @@ const Register = () => {
           boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.1)',
         }}
       >
-        {/* Form Section */}
         <Box sx={{ width: { xs: '100%', md: '45%' } }}>
           <Typography variant="h4" sx={{ fontWeight: 'bold', marginBottom: 3 }}>
             Sign up
           </Typography>
 
           <Grid container component="form">
-            {/* Name Field */}
             <Grid item xs={12}>
               <TextField
                 fullWidth
                 label="Your Name"
                 name="name"
-                value={formValues.name}
+                value={formValues?.name}
                 onChange={handleChange}
                 error={!!formErrors.name}
                 helperText={formErrors.name}
@@ -164,14 +128,13 @@ const Register = () => {
               />
             </Grid>
 
-            {/* Email Field */}
             <Grid item xs={12}>
               <TextField
                 fullWidth
                 label="Email"
                 name="email"
                 type="email"
-                value={formValues.email}
+                value={formValues?.email}
                 onChange={handleChange}
                 error={!!formErrors.email}
                 helperText={formErrors.email}
@@ -188,14 +151,13 @@ const Register = () => {
               />
             </Grid>
 
-            {/* Password Fields */}
             <Grid item xs={12}>
               <TextField
                 fullWidth
                 label="Password"
                 name="password"
                 type="password"
-                value={formValues.password}
+                value={formValues?.password}
                 onChange={handleChange}
                 error={!!formErrors.password}
                 helperText={formErrors.password}
@@ -218,7 +180,7 @@ const Register = () => {
                 label="Repeat your password"
                 name="confirmPassword"
                 type="password"
-                value={formValues.confirmPassword}
+                value={formValues?.confirmPassword}
                 onChange={handleChange}
                 error={!!formErrors.confirmPassword}
                 helperText={formErrors.confirmPassword}
@@ -236,9 +198,8 @@ const Register = () => {
             </Grid>
           </Grid>
 
-          {/* Terms of Service Checkbox */}
           <FormControlLabel
-            control={<Checkbox checked={formValues.agreeTerms} onChange={handleCheckboxChange} color="primary" />}
+            control={<Checkbox checked={formValues?.agreeTerms} onChange={handleCheckboxChange} color="primary" />}
             label={
               <Typography variant="body2">
                 I agree to all statements in{' '}
@@ -248,8 +209,6 @@ const Register = () => {
               </Typography>
             }
             sx={{ marginTop: 2 }}
-            error={!!formErrors.agreeTerms}
-            helperText={formErrors.agreeTerms}
           />
 
           {formErrors.agreeTerms && (
@@ -258,7 +217,6 @@ const Register = () => {
             </Typography>
           )}
 
-          {/* Sign Up Button */}
           <Button
             type="submit"
             fullWidth
@@ -278,7 +236,6 @@ const Register = () => {
           </Button>
         </Box>
 
-        {/* Illustration Section */}
         <Box
           sx={{
             width: { xs: '100%', md: '45%' },
@@ -299,25 +256,11 @@ const Register = () => {
         </Box>
       </Container>
 
-      {/* OTP Modal */}
-      <CustomModal
-        open={otpModalOpen}
+      <OtpModal 
+        open={otpModalOpen} 
         onClose={() => setOtpModalOpen(false)}
-        title="Enter OTP"
-        content={
-          <TextField
-            label="OTP"
-            fullWidth
-            variant="standard"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-          />
-        }
-        actions={
-          <Button variant="contained" color="primary" onClick={handleOtpSubmit}>
-            Submit OTP
-          </Button>
-        }
+        maskedContact={maskEmailOrMobile(formValues.email)}
+        onOtpSubmit={handleOtpSubmit}
       />
     </Box>
   );

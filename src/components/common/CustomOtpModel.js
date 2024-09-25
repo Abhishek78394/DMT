@@ -1,20 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { Box, TextField, Button, Typography, Modal, Snackbar, Alert } from '@mui/material';
 
-const VALID_OTP = 'P-1234';
-
-const OtpModal = ({ open, onClose, otpMethod, maskedContact, onOtpSubmit }) => {
-  const [otp, setOtp] = useState(['P', '-', '', '', '', '']);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState(false);
-  const [showNotification, setShowNotification] = useState(false);
-  const [notificationType, setNotificationType] = useState('success'); // Track success or error
+const CustomOtpModel = ({
+  open,
+  onClose,
+  otpPrefix = 'P-',         
+  otpLength = 4,             
+  maskedContact,             
+  onOtpSubmit,
+  handleSubmit,             
+  successMessage = 'OTP Verified Successfully!',
+  errorMessage = 'Invalid OTP. Please try again.',
+}) => {
+  const defaultOtp = otpPrefix.split('').concat(Array(otpLength).fill(''));
+  const [otp, setOtp] = useState(defaultOtp);  // Holds OTP input
+  const [error, setError] = useState('');      // Holds error message state
+  const [showNotification, setShowNotification] = useState(false);  // Controls Snackbar visibility
+  const [notificationType, setNotificationType] = useState('success');  // Type of notification (success or error)
 
   useEffect(() => {
     if (open) {
-      document.getElementById('otp-input-2')?.focus();
+      document.getElementById(`otp-input-${otpPrefix.length}`)?.focus();
     }
-  }, [open]);
+  }, [open, otpPrefix.length]);
 
   const handleInputChange = (index, value) => {
     const newOtp = [...otp];
@@ -27,26 +35,29 @@ const OtpModal = ({ open, onClose, otpMethod, maskedContact, onOtpSubmit }) => {
   };
 
   const handleKeyDown = (event, index) => {
-    if (event.key === 'Backspace' && !otp[index] && index > 2) {
+    if (event.key === 'Backspace' && !otp[index] && index > otpPrefix.length) {
       document.getElementById(`otp-input-${index - 1}`).focus();
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmitClick = () => {
     const enteredOtp = otp.join('');
-    if (enteredOtp === VALID_OTP) {
-      setError('');
-      setSuccess(true);
-      setShowNotification(true);
-      setNotificationType('success'); 
-      setOtp(['P', '-', '', '', '', ''])
-      onOtpSubmit(enteredOtp);
+    if (handleSubmit) {
+      handleSubmit(enteredOtp, setError, setShowNotification, setNotificationType);
     } else {
-      setError('Invalid OTP. Please try again.');
-      setSuccess(false);
-      setOtp(['P', '-', '', '', '', ''])
-      setShowNotification(true);
-      setNotificationType('error'); // Show error notification
+      // onOtpSubmit(enteredOtp);
+      if (enteredOtp === otpPrefix + '1234') {
+        setError('');
+        setNotificationType('success');
+        setShowNotification(true);
+        setOtp(defaultOtp);
+        onClose()
+      } else {
+        setError(errorMessage);
+        setNotificationType('error');
+        setShowNotification(true);
+        setOtp(defaultOtp);
+      }
     }
   };
 
@@ -94,27 +105,22 @@ const OtpModal = ({ open, onClose, otpMethod, maskedContact, onOtpSubmit }) => {
                     height: '40px',
                     fontSize: '20px',
                   },
-                  readOnly: index < 2, 
+                  readOnly: index < otpPrefix.length,  // Make the prefix non-editable
                 }}
                 sx={{ width: '50px', margin: '0 5px', bgcolor: '#f0f0f0', borderRadius: 1 }}
                 variant="standard"
-                error={!!error && index >= 2}
+                error={!!error && index >= otpPrefix.length}
               />
             ))}
           </Box>
 
-          {success && (
-            <Typography variant="h6" color="green" mt={2}>
-              OTP is valid! Login Successful!
-            </Typography>
-          )}
-          {!success && error && (
+          {error && (
             <Typography variant="body1" color="red" mt={2}>
               {error}
             </Typography>
           )}
 
-          <Button variant="contained" color="primary" onClick={handleSubmit}>
+          <Button variant="contained" color="primary" onClick={handleSubmitClick}>
             Submit
           </Button>
         </Box>
@@ -126,18 +132,12 @@ const OtpModal = ({ open, onClose, otpMethod, maskedContact, onOtpSubmit }) => {
         onClose={handleNotificationClose}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <Alert 
-          onClose={handleNotificationClose} 
-          severity={notificationType}  // Show success or error
-          sx={{ width: '100%' }}
-        >
-          {notificationType === 'success' 
-            ? 'OTP Verified Successfully!' 
-            : 'Invalid OTP. Please try again.'}
+        <Alert onClose={handleNotificationClose} severity={notificationType} sx={{ width: '100%' }}>
+          {notificationType === 'success' ? successMessage : errorMessage}
         </Alert>
       </Snackbar>
     </>
   );
 };
 
-export default OtpModal;
+export default CustomOtpModel;

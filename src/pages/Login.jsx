@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Box, Container, Typography, Button } from '@mui/material';
 import LoginForm from '../components/LoginForm';
-import OtpModal from '../components/OtpModal';
 import CustomModal from '../components/CustomModal';
 import { maskEmailOrMobile } from '../utils/helpers';
 import { identifyInput } from '../services/constent';
+import { useSelector } from 'react-redux';
+import CustomSnackbar from '../components/common/CustomSnackbar';
+import CustomOtpModel from '../components/common/CustomOtpModel';
 
 const Login = () => {
   const [formValues, setFormValues] = useState({
@@ -12,7 +14,10 @@ const Login = () => {
     password: '',
     agreeTerms: false,
   });
-  
+
+  const [notification, setNotification] = useState({ show: false, type: 'success', message: '' });
+  const registerData = useSelector((state) => state.auth.registerData);
+
   const [otpState, setOtpState] = useState({
     showOtpModal: false,
     showChooseOtpModal: false,
@@ -20,47 +25,56 @@ const Login = () => {
     maskedContact: '',
   });
 
-  const handleOtpModal = (method) => {
-    const maskedContact = maskEmailOrMobile(formValues.email); // Mask email/mobile for display
+  const handleOtpModal = useCallback((method) => {
     setOtpState({
-      ...otpState,
-      otpMethod: method, 
+      otpMethod: method,
       showOtpModal: true,
-      maskedContact,
-      showChooseOtpModal: false, 
+      maskedContact: maskEmailOrMobile(formValues.email),
+      showChooseOtpModal: false,
     });
-  };
+  }, [formValues.email]);
 
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     const { name, value } = e.target;
     setFormValues((prev) => ({ ...prev, [name]: value }));
-  };
+  }, []);
 
-  const handleSubmit = (values) => {
-    const inputType = identifyInput(values.email); 
+  const handleSubmit = useCallback((values) => {
+    const inputType = identifyInput(values.email);
+
     if (inputType === 'AccountNumber' || inputType === 'ID') {
       setOtpState((prev) => ({
         ...prev,
-        otpMethod: 'Account', 
-        showChooseOtpModal: true, 
+        otpMethod: 'Account',
+        showChooseOtpModal: true,
       }));
-    } 
-    else if (inputType === 'Email' || inputType === 'Mobile') {
+    } else if (inputType === 'Email' || inputType === 'Mobile') {
+      if (inputType === 'Email' && values.email !== registerData.email) {
+        setNotification({ show: true, type: 'error', message: 'This Email is not Registered.' });
+        return;
+      }
+      if (inputType === 'Email' && values.password !== registerData.password) {
+        setNotification({ show: true, type: 'error', message: 'Invalid credentials.' });
+        return;
+      }
+
       setOtpState((prev) => ({
         ...prev,
         showOtpModal: true,
-        otpMethod: inputType, 
-        maskedContact: maskEmailOrMobile(values.email), 
+        otpMethod: inputType,
+        maskedContact: maskEmailOrMobile(values.email),
       }));
-    } else {
-      console.log("Invalid input");
     }
-  };
+  }, [registerData]);
 
-  const handleOtpSubmit = (otp) => {
+  const handleOtpSubmit = useCallback((otp) => {
     console.log('OTP submitted:', otp);
     setOtpState((prev) => ({ ...prev, showOtpModal: false }));
-  };
+  }, []);
+
+  const handleNotificationClose = useCallback(() => {
+    setNotification((prev) => ({ ...prev, show: false }));
+  }, []);
 
   return (
     <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh" bgcolor="#f5f5f5">
@@ -90,12 +104,19 @@ const Login = () => {
         }
       />
 
-      <OtpModal 
+      <CustomOtpModel 
         open={otpState.showOtpModal} 
-        onClose={() => setOtpState((prev) => ({ ...prev, showOtpModal: false }))}
+        onClose={() => setOtpState((prev) => ({ ...prev, showOtpModal: false }))} 
         otpMethod={otpState.otpMethod}
         maskedContact={otpState.maskedContact}
-        onOtpSubmit={handleOtpSubmit}
+        // onOtpSubmit={handleOtpSubmit}
+      />
+
+      <CustomSnackbar 
+        open={notification.show} 
+        onClose={handleNotificationClose} 
+        severity={notification.type} 
+        message={notification.message}
       />
     </Box>
   );
