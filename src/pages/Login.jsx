@@ -86,7 +86,7 @@ const Login = () => {
         <Box width="45%" textAlign="center">
           <img src="signup-image.jpg" alt="Illustration" style={{ maxWidth: '90%', borderRadius: '12px' }} />
           <Typography variant="body2" mt={2}>
-            Don't have an account? <Button component="a" href="/sign-up">Sign up</Button>
+            Don't have an account? <Button component="a" href="/">Sign up</Button>
           </Typography>
         </Box>
       </Container>

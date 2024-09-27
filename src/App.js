@@ -4,7 +4,6 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './screen/Dashboard';
 
-
 function App() {
 
   return (
@@ -13,8 +12,8 @@ function App() {
         <Route path="/login-otp" element={<LoginOtp />} />
         <Route path="/register" element={<SignupPage />} /> */}
 
-        <Route path="/sign-up" element={<Register />} />
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Register />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Dashboard />} />
 
         {/* <Route path="/profile" element={<ProfileCard />} />

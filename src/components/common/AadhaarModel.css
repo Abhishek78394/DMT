@@ -1,0 +1,116 @@
+/* Background elements with animation */
+.aadhaar-container {
+  position: absolute;
+  height: 100vh;
+  display: flex;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: linear-gradient(145deg, #0f2027, #2c5364);
+  perspective: 1000px;
+}
+
+.background-cube, .background-circle {
+  position: absolute;
+  animation: rotate 20s infinite linear;
+}
+
+.background-cube {
+  top: 10%;
+  left: -50px;
+  width: 150px;
+  height: 150px;
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: rotateX(45deg) rotateY(45deg);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.background-circle {
+  bottom: -50px;
+  right: -50px;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.25), transparent);
+  box-shadow: 0 10px 50px rgba(255, 255, 255, 0.3);
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Aadhaar Form 3D card */
+.aadhaar-form-container {
+  background: rgba(255, 255, 255, 0.1) !important;
+  padding: 40px;
+  border-radius: 500px;
+  text-align: center;
+  max-width: 480px;
+  width: 100%;
+  backdrop-filter: blur(10px)!important;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25)!important;
+  transform: rotateY(15deg) rotateX(5deg)!important;
+  transition: transform 0.5s!important;
+}
+
+.aadhaar-container:hover .aadhaar-form-container {
+  transform: rotateY(0deg) rotateX(0deg);
+}
+
+/* Title styling */
+.aadhaar-title {
+  font-weight: bold;
+  font-size: 2.2rem;
+  background: linear-gradient(135deg, #00d4ff, #1f80ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Input field with glowing effect */
+.aadhaar-input {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  color: #fff;
+}
+
+.aadhaar-input-icon {
+  color: #00d4ff;
+}
+
+.aadhaar-input .MuiOutlinedInput-root {
+  color: #fff;
+}
+
+.aadhaar-input .MuiInputLabel-root {
+  color: #aaa;
+}
+
+/* Input error text */
+.aadhaar-error {
+  color: red;
+  margin-top: 8px;
+}
+
+/* Submit button with neon glow */
+.aadhaar-submit-btn {
+  margin-top: 30px;
+  padding: 12px;
+  border-radius: 30px!important;
+  background: linear-gradient(135deg, #00d4ff, #1f80ff);
+  font-size: 1.18rem !important;
+  font-weight: bold;
+  transition: box-shadow 0.4s ease, transform 0.3s ease;
+}
+
+.aadhaar-submit-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}

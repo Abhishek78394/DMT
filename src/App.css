@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+
+/* CustomToast.css */
+
+.custom-toast {
+  background-color: #384258; /* Dark background color to match your UI */
+  color: #ffffff; /* White text color */
+  border-radius: 10px; /* Smooth rounded corners */
+  border: 1px solid #ffffff22; /* Light border for aesthetics */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+}
+
+.custom-toast .Toastify__toast-icon {
+  color: #eb5e4d; /* Icon color */
+}
+
+.custom-toast .Toastify__close-button {
+  color: #ffffff; /* Close button color */
+}

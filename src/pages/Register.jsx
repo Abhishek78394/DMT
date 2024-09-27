@@ -8,6 +8,8 @@ import OtpModal from '../components/OtpModal';
 import { maskEmailOrMobile } from '../utils/helpers';
 import { useDispatch } from 'react-redux';
 import { setRegisterData } from '../redux/reducers/authReducer';
+import MobileRegister from '../components/common/MobileRegister';
+import OTPVerify from '../components/common/OTPVerify';
 
 const Register = () => {
   const [formValues, setFormValues] = useState({
@@ -19,9 +21,10 @@ const Register = () => {
   });
   const  navigate  = useNavigate();
   const dispatch = useDispatch()
+  const [isMobileModelShow, setIsMobileModelShow] = useState(false)
   const [formErrors, setFormErrors] = useState({});
   const [otpModalOpen, setOtpModalOpen] = useState(false); 
-
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({
@@ -68,11 +71,9 @@ const Register = () => {
   };
 
   const handleOtpSubmit = (otpValue) => {
-    console.log('OTP Submitted:', otpValue);
     setOtpModalOpen(false); 
     dispatch(setRegisterData(formValues));
-    console.log(formValues)
-    navigate('/')
+    setIsMobileModelShow(true)
   };
 
   return (
@@ -249,7 +250,7 @@ const Register = () => {
             style={{ maxWidth: '90%', height: 'auto', borderRadius: '12px' }}
           />
           <Typography align="center" variant="body2" sx={{ marginTop: 3 }}>
-            <Link to="/" underline="hover">
+            <Link to="/login" underline="hover">
               I am already a member
             </Link>
           </Typography>
@@ -262,6 +263,8 @@ const Register = () => {
         maskedContact={maskEmailOrMobile(formValues.email)}
         onOtpSubmit={handleOtpSubmit}
       />
+       { isMobileModelShow && <MobileRegister  />}
+      
     </Box>
   );
 };
