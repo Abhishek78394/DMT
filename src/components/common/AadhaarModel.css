@@ -1,4 +1,3 @@
-/* Aadhaar Container with enhanced 3D effects */
 .aadhaar-container {
   position: fixed;
   height: 100vh;
@@ -67,7 +66,6 @@
   }
 }
 
-/* Aadhaar Form Container with 3D rotation */
 .aadhaar-form-container {
   background: rgba(255, 255, 255, 0.15) !important;
   padding: 40px;
@@ -86,7 +84,6 @@
   box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
 }
 
-/* Aadhaar Title Styling */
 .aadhaar-title {
   font-weight: bold;
   font-size: 2.5rem;
@@ -97,7 +94,6 @@
   animation: float 5s ease-in-out infinite;
 }
 
-/* Enhanced input field with glowing effect */
 .aadhaar-input {
   background-color: rgba(255, 255, 255, 0.25);
   border-radius: 15px;
@@ -123,7 +119,6 @@
   transform: translateZ(100px);
 }
 
-/* Submit button with deep 3D glow effect */
 .aadhaar-submit-btn {
   margin-top: 30px;
   padding: 12px;
@@ -137,6 +132,5 @@
 }
 
 .aadhaar-submit-btn:hover {
-  /* transform: translateY(-10px) translateZ(120px); */
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
 }
