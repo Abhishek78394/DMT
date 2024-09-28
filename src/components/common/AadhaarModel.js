@@ -3,33 +3,42 @@ import { TextField, Button, Box, Typography, Paper } from "@mui/material";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./AadhaarModel.css"; 
+import "./AadhaarModel.css";
+import OTPVerify from './OTPVerify';
+import AdhaarOtpVerify from "./AdhaarOtpVerify";
 
 const validateAadhaar = (aadhaar) => /^\d{12}$/.test(aadhaar);
 
 const AadhaarModel = () => {
   const [aadhaarNumber, setAadhaarNumber] = useState("");
   const [isValid, setIsValid] = useState(null);
+  const [isotpShow, setIsotpShow] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e) => {
     const value = e.target.value;
     setAadhaarNumber(value);
     setIsValid(validateAadhaar(value));
+    if (!validateAadhaar(value)) {
+      setErrorMessage("Aadhaar number must be 12 digits.");
+    } else {
+      setErrorMessage("");
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isValid) {
       toast.success("Aadhaar number validated successfully!");
+      setIsotpShow(true)
     } else {
-      toast.error("Invalid Aadhaar number! It should be 12 digits long.");
+      toast.error("Invalid Aadhaar number! Please enter 12 digits.");
     }
   };
 
   return (
     <Box className="aadhaar-container">
-      {/* Background effect */}
+      {/* Background effects */}
       <div className="background-cube"></div>
       <div className="background-circle"></div>
 
@@ -40,14 +49,14 @@ const AadhaarModel = () => {
 
         <Box component="form" onSubmit={handleSubmit} className="aadhaar-form">
           <TextField
-            label="PAN Number"
+            label="Aadhaar Number"
             variant="outlined"
             fullWidth
             margin="normal"
             value={aadhaarNumber}
             onChange={handleChange}
-            error={Boolean(errorMessage)} // Set error state based on message
-            helperText={errorMessage && errorMessage} // Show error message only if exists
+            error={Boolean(errorMessage)}
+            helperText={errorMessage && errorMessage}
             InputProps={{
               startAdornment: (
                 <VpnKeyIcon sx={{ color: "#00d4ff", marginRight: "10px" }} />
@@ -79,6 +88,7 @@ const AadhaarModel = () => {
           </Button>
         </Box>
       </Paper>
+    { isotpShow && <AdhaarOtpVerify />}
     </Box>
   );
 };

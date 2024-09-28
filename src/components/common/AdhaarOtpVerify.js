@@ -4,8 +4,9 @@ import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { toast } from 'react-toastify';
 import PANCardInput from './PANCardInput';
+import AddressForm from './AddressForm';
 
-const OTPVerify = ({mobileNumber="******7140"}) => {
+const AdhaarOtpVerify = ({mobileNumber="******7140"}) => {
   const [otpCode, setOtpCode] = useState('P-'); 
   const [isVerified, setIsVerified] = useState(false);
   const defaultOtp = 'P-1234'
@@ -183,9 +184,9 @@ const OTPVerify = ({mobileNumber="******7140"}) => {
           </Button>
         </Box>
       </Paper>
-      {isVerified && <PANCardInput />}
+       {isVerified && <AddressForm />} 
     </Box>
   );
 };
 
-export default OTPVerify;
+export default AdhaarOtpVerify;

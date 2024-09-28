@@ -1,88 +1,110 @@
-/* Background elements with animation */
+/* Aadhaar Container with enhanced 3D effects */
 .aadhaar-container {
-  position: absolute;
+  position: fixed;
   height: 100vh;
   display: flex;
   width: 100vw;
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  background: linear-gradient(145deg, #0f2027, #2c5364);
-  perspective: 1000px;
+  background: radial-gradient(circle at 50%, #0f2027, #203a43, #2c5364);
+  perspective: 1500px;
 }
 
 .background-cube, .background-circle {
   position: absolute;
   animation: rotate 20s infinite linear;
+  opacity: 0.7;
 }
 
 .background-cube {
-  top: 10%;
-  left: -50px;
-  width: 150px;
-  height: 150px;
-  background-color: rgba(255, 255, 255, 0.2);
-  transform: rotateX(45deg) rotateY(45deg);
+  top: 15%;
+  left: -70px;
+  width: 200px;
+  height: 200px;
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: rotateX(45deg) rotateY(45deg) translateZ(-200px);
   border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  animation: rotateX 30s infinite linear;
 }
 
 .background-circle {
-  bottom: -50px;
-  right: -50px;
-  width: 300px;
-  height: 300px;
+  bottom: -100px;
+  right: -100px;
+  width: 350px;
+  height: 350px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.25), transparent);
-  box-shadow: 0 10px 50px rgba(255, 255, 255, 0.3);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.35), transparent);
+  box-shadow: 0 10px 50px rgba(255, 255, 255, 0.4);
+  animation: rotateY 40s infinite linear;
 }
 
-@keyframes rotate {
+@keyframes rotateX {
   from {
-    transform: rotate(0deg);
+    transform: rotateX(0deg);
   }
   to {
-    transform: rotate(360deg);
+    transform: rotateX(360deg);
   }
 }
 
-/* Aadhaar Form 3D card */
+@keyframes rotateY {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Aadhaar Form Container with 3D rotation */
 .aadhaar-form-container {
-  background: rgba(255, 255, 255, 0.1) !important;
+  background: rgba(255, 255, 255, 0.15) !important;
   padding: 40px;
-  border-radius: 500px;
+  border-radius: 25px;
   text-align: center;
-  max-width: 480px;
+  max-width: 500px;
   width: 100%;
-  backdrop-filter: blur(10px)!important;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25)!important;
-  transform: rotateY(15deg) rotateX(5deg)!important;
-  transition: transform 0.5s!important;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  transform: rotateY(25deg) rotateX(10deg) translateZ(150px);
+  transition: transform 0.6s, box-shadow 0.6s;
 }
 
 .aadhaar-container:hover .aadhaar-form-container {
-  transform: rotateY(0deg) rotateX(0deg);
+  transform: rotateY(0deg) rotateX(0deg) translateZ(0);
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
 }
 
-/* Title styling */
+/* Aadhaar Title Styling */
 .aadhaar-title {
   font-weight: bold;
-  font-size: 2.2rem;
+  font-size: 2.5rem;
   background: linear-gradient(135deg, #00d4ff, #1f80ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  transform: translateZ(50px);
+  animation: float 5s ease-in-out infinite;
 }
 
-/* Input field with glowing effect */
+/* Enhanced input field with glowing effect */
 .aadhaar-input {
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.25);
   border-radius: 15px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   color: #fff;
-}
-
-.aadhaar-input-icon {
-  color: #00d4ff;
+  transform: translateZ(80px);
+  transition: transform 0.5s ease;
 }
 
 .aadhaar-input .MuiOutlinedInput-root {
@@ -93,24 +115,28 @@
   color: #aaa;
 }
 
-/* Input error text */
-.aadhaar-error {
-  color: red;
-  margin-top: 8px;
+.aadhaar-input-icon {
+  color: #00d4ff;
 }
 
-/* Submit button with neon glow */
+.aadhaar-input:hover {
+  transform: translateZ(100px);
+}
+
+/* Submit button with deep 3D glow effect */
 .aadhaar-submit-btn {
   margin-top: 30px;
   padding: 12px;
-  border-radius: 30px!important;
-  background: linear-gradient(135deg, #00d4ff, #1f80ff);
-  font-size: 1.18rem !important;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #00d4ff, #1f80ff) !important;
+  font-size: 1.2rem;
   font-weight: bold;
-  transition: box-shadow 0.4s ease, transform 0.3s ease;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  transform: translateZ(100px);
+  transition: transform 0.5s, box-shadow 0.4s;
 }
 
 .aadhaar-submit-btn:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  /* transform: translateY(-10px) translateZ(120px); */
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
 }
