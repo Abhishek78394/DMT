@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Modal, Button } from '@mui/material';
+import { Box, Typography, Modal } from '@mui/material';
 
 const CustomModal = ({ open, onClose, title, content, actions }) => (
   <Modal open={open} onClose={onClose}>

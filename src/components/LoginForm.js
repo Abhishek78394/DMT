@@ -36,7 +36,7 @@ const LoginForm = ({ onSubmit }) => {
     e.preventDefault();
     const errors = validateForm(formValues);
     setFormErrors(errors);
-
+    setIsSubmitting(false)
     if (Object.keys(errors).length === 0) {
       onSubmit(formValues);  // Trigger the submit handler passed from Login.js
     }

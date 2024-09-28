@@ -10,7 +10,6 @@ import {
   Typography,
 } from '@mui/material';
 import './AddressForm.css';
-import { toast } from 'react-toastify';
 import BankVerification from './BankVerification';
 
 const AddressForm = () => {

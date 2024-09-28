@@ -4,7 +4,6 @@ import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./AadhaarModel.css";
-import OTPVerify from './OTPVerify';
 import AdhaarOtpVerify from "./AdhaarOtpVerify";
 
 const validateAadhaar = (aadhaar) => /^\d{12}$/.test(aadhaar);

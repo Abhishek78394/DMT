@@ -3,7 +3,6 @@ import { TextField, Button, Box, Typography, Paper } from '@mui/material';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { toast } from 'react-toastify';
-import PANCardInput from './PANCardInput';
 import AddressForm from './AddressForm';
 
 const AdhaarOtpVerify = ({mobileNumber="******7140"}) => {

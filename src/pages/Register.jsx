@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { Box, Container, TextField, Checkbox, Button, FormControlLabel, Typography, Grid, InputAdornment, Modal } from '@mui/material';
+import { Box, Container, TextField, Checkbox, Button, FormControlLabel, Typography, Grid, InputAdornment } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import OtpModal from '../components/OtpModal';
 import { maskEmailOrMobile } from '../utils/helpers';
 import { useDispatch } from 'react-redux';
 import { setRegisterData } from '../redux/reducers/authReducer';
 import MobileRegister from '../components/common/MobileRegister';
-import OTPVerify from '../components/common/OTPVerify';
 
 const Register = () => {
   const [formValues, setFormValues] = useState({
@@ -19,7 +18,6 @@ const Register = () => {
     confirmPassword: '',
     agreeTerms: false,
   });
-  const  navigate  = useNavigate();
   const dispatch = useDispatch()
   const [isMobileModelShow, setIsMobileModelShow] = useState(false)
   const [formErrors, setFormErrors] = useState({});

@@ -67,10 +67,10 @@ const Login = () => {
     }
   }, [registerData]);
 
-  const handleOtpSubmit = useCallback((otp) => {
-    console.log('OTP submitted:', otp);
-    setOtpState((prev) => ({ ...prev, showOtpModal: false }));
-  }, []);
+  // const handleOtpSubmit = useCallback((otp) => {
+  //   console.log('OTP submitted:', otp);
+  //   setOtpState((prev) => ({ ...prev, showOtpModal: false }));
+  // }, []);
 
   const handleNotificationClose = useCallback(() => {
     setNotification((prev) => ({ ...prev, show: false }));
