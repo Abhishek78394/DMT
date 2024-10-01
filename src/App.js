@@ -7,6 +7,9 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import MobileRegister from "./pages/MobileRegister";
 import PanVerification from "./pages/PanVerification";
+import UserDetailsPage from "./pages/UserDetailsPage";
+import AadharVerificationPage from "./pages/AadharVerificationPage";
+import AddressPage from "./pages/AddressPage";
 
 function App() {
   return (
@@ -15,6 +18,9 @@ function App() {
       <Route path="/sign-in" element={<SignIn />} />
       <Route path="/mobile-verification" element={<MobileRegister />} />
       <Route path="/pan-verification" element={<PanVerification />} />
+      <Route path="/user-detail" element={<UserDetailsPage />} />
+      <Route path="/adhar-verification" element={<AadharVerificationPage />} />
+      <Route path="/address" element={<AddressPage />} />
 
       {/* <Route path="/login" element={<LoginPage />} />
         <Route path="/login-otp" element={<LoginOtp />} />

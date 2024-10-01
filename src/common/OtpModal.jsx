@@ -7,19 +7,26 @@ const OtpModal = ({ open, handleClose, email, otpCode, onSubmit }) => {
 
   const handleChange = (element, index) => {
     if (isNaN(element.value)) return;
+
     let newOtp = [...otp];
     newOtp[index] = element.value;
     setOtp(newOtp);
-    
+
     // Auto focus to next input
     if (element.value !== "" && index < otp.length - 1) {
       document.getElementById(`otp-input-${index + 1}`).focus();
     }
   };
 
+  const handleKeyDown = (e, index) => {
+    if (e.key === "Backspace" && otp[index] === '' && index > 0) {
+      document.getElementById(`otp-input-${index - 1}`).focus();
+    }
+  };
+
   const handleSubmit = () => {
     const otpValue = otp.join('');
-    onSubmit(otpValue);  // Handle the OTP submission
+    onSubmit(otpValue); // Handle the OTP submission
   };
 
   return (
@@ -35,7 +42,7 @@ const OtpModal = ({ open, handleClose, email, otpCode, onSubmit }) => {
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          width: 500,
+          width: { xs: '90%', sm: 400, md: 500 },  // Responsive width
           bgcolor: 'background.paper',
           borderRadius: 2,
           boxShadow: 24,
@@ -46,7 +53,7 @@ const OtpModal = ({ open, handleClose, email, otpCode, onSubmit }) => {
         <Typography id="otp-modal-title" variant="h6" sx={{ marginBottom: 2 }}>
           Enter the OTP sent to {email}
         </Typography>
-        
+
         <Grid container spacing={2} justifyContent="center">
           {otp.map((data, index) => (
             <Grid item key={index}>
@@ -54,10 +61,11 @@ const OtpModal = ({ open, handleClose, email, otpCode, onSubmit }) => {
                 inputProps={{
                   maxLength: 1,
                   style: { textAlign: 'center', fontSize: '20px' },
-                  id: `otp-input-${index}`
+                  id: `otp-input-${index}`,
                 }}
                 value={data}
                 onChange={(e) => handleChange(e.target, index)}
+                onKeyDown={(e) => handleKeyDown(e, index)}
                 sx={{ width: 45 }}
                 disabled={index < 2}  // Disable the first two inputs
               />

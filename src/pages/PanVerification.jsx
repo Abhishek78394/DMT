@@ -55,7 +55,7 @@ const PanRegistration = () => {
   const handleOtpSubmit = (otpValue) => {
     if (otpCode === otpValue) {
       toast.success("Pan verified successfully.");
-     alert("next work is pending")
+      navigate('/user-detail')
     } else {
       toast.error("OTP verification failed. Please try again.");
     }
@@ -78,6 +78,7 @@ const PanRegistration = () => {
           flexDirection: { xs: "column", md: "row" },
           backgroundColor: "#fff",
           padding: 5,
+          paddingY: 8,
           borderRadius: "12px",
           boxShadow: "0px 0px 20px rgba(0, 0, 0, 0.1)",
         }}
@@ -135,7 +136,7 @@ const PanRegistration = () => {
           }}
         >
           <img
-            src="signup-image.jpg" 
+            src="pan.jpg" 
             alt="Illustration"
             style={{ maxWidth: "90%", height: "auto", borderRadius: "12px" }}
           />
