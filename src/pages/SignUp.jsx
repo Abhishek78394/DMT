@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
 
 import { maskEmailOrMobile } from "../utils/helpers";
-import RegisterForm from "../components/RegisterForm";
+import RegisterForm from "../common/RegisterForm";
 import { useRegisterForm } from "../hooks/useRegisterForm";
 import OtpModal from "../common/OtpModal";
 
