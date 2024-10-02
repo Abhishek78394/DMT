@@ -9,7 +9,7 @@ import {
     Grid,
 } from '@mui/material';
 import { toast } from 'react-toastify';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const AddressPage = () => {
     const [currentAddress, setCurrentAddress] = useState({
@@ -60,16 +60,19 @@ const AddressPage = () => {
 
     const validateForm = () => {
         const newErrors = {};
+
+        // Validate Current Address
         for (const field in currentAddress) {
             if (!currentAddress[field]) {
                 newErrors[field] = `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
             }
         }
 
+        // Validate Communication Address only if it's not the same as the current address
         if (!isSameAddress) {
             for (const field in communicationAddress) {
                 if (!communicationAddress[field]) {
-                    newErrors[field] = `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
+                    newErrors[`communication_${field}`] = `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
                 }
             }
         }
@@ -82,12 +85,10 @@ const AddressPage = () => {
         if (validateForm()) {
             console.log('Current Address:', currentAddress);
             console.log('Communication Address:', communicationAddress);
-            toast.success('Form submitted successfully!')
-            navigate('/bank')
+            toast.success('Form submitted successfully!');
+            navigate('/bank');
         }
     };
-
-   
 
     return (
         <Box
@@ -202,9 +203,9 @@ const AddressPage = () => {
                     onChange={handleCommunicationAddressChange}
                     margin="normal"
                     variant="outlined"
-                    error={!!errors.street && !isSameAddress} 
-                    helperText={isSameAddress ? '' : errors.street}
-                    disabled={isSameAddress} 
+                    error={!!errors.communication_street && !isSameAddress} // Updated error handling
+                    helperText={isSameAddress ? '' : errors.communication_street} // Updated helper text
+                    disabled={isSameAddress} // Disable field if addresses are the same
                 />
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
@@ -216,9 +217,9 @@ const AddressPage = () => {
                             onChange={handleCommunicationAddressChange}
                             margin="normal"
                             variant="outlined"
-                            error={!!errors.city && !isSameAddress} 
-                            helperText={isSameAddress ? '' : errors.city}
-                            disabled={isSameAddress}
+                            error={!!errors.communication_city && !isSameAddress} // Updated error handling
+                            helperText={isSameAddress ? '' : errors.communication_city} // Updated helper text
+                            disabled={isSameAddress} // Disable field if addresses are the same
                         />
                     </Grid>
                     <Grid item xs={6}>
@@ -230,9 +231,9 @@ const AddressPage = () => {
                             onChange={handleCommunicationAddressChange}
                             margin="normal"
                             variant="outlined"
-                            error={!!errors.state && !isSameAddress} 
-                            helperText={isSameAddress ? '' : errors.state}
-                            disabled={isSameAddress}
+                            error={!!errors.communication_state && !isSameAddress} // Updated error handling
+                            helperText={isSameAddress ? '' : errors.communication_state} // Updated helper text
+                            disabled={isSameAddress} // Disable field if addresses are the same
                         />
                     </Grid>
                 </Grid>
@@ -246,9 +247,9 @@ const AddressPage = () => {
                             onChange={handleCommunicationAddressChange}
                             margin="normal"
                             variant="outlined"
-                            error={!!errors.zipCode && !isSameAddress} // Show error only if not the same address
-                            helperText={isSameAddress ? '' : errors.zipCode}
-                            disabled={isSameAddress}
+                            error={!!errors.communication_zipCode && !isSameAddress} // Updated error handling
+                            helperText={isSameAddress ? '' : errors.communication_zipCode} // Updated helper text
+                            disabled={isSameAddress} // Disable field if addresses are the same
                         />
                     </Grid>
                     <Grid item xs={6}>
@@ -260,9 +261,9 @@ const AddressPage = () => {
                             onChange={handleCommunicationAddressChange}
                             margin="normal"
                             variant="outlined"
-                            error={!!errors.landmark && !isSameAddress} // Show error only if not the same address
-                            helperText={isSameAddress ? '' : errors.landmark}
-                            disabled={isSameAddress}
+                            error={!!errors.communication_landmark && !isSameAddress} // Updated error handling
+                            helperText={isSameAddress ? '' : errors.communication_landmark} // Updated helper text
+                            disabled={isSameAddress} // Disable field if addresses are the same
                         />
                     </Grid>
                 </Grid>
