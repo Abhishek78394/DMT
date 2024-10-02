@@ -7,10 +7,9 @@ import {
     Checkbox,
     FormControlLabel,
     Grid,
-    Snackbar,
-    Alert
 } from '@mui/material';
 import { toast } from 'react-toastify';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const AddressPage = () => {
     const [currentAddress, setCurrentAddress] = useState({
@@ -29,7 +28,7 @@ const AddressPage = () => {
     });
     const [isSameAddress, setIsSameAddress] = useState(false);
     const [errors, setErrors] = useState({});
-    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const navigate = useNavigate()
 
     const handleCheckboxChange = () => {
         setIsSameAddress(!isSameAddress);
@@ -61,14 +60,12 @@ const AddressPage = () => {
 
     const validateForm = () => {
         const newErrors = {};
-        // Check current address fields
         for (const field in currentAddress) {
             if (!currentAddress[field]) {
                 newErrors[field] = `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
             }
         }
 
-        // Check communication address fields only if not same as current address
         if (!isSameAddress) {
             for (const field in communicationAddress) {
                 if (!communicationAddress[field]) {
@@ -78,7 +75,7 @@ const AddressPage = () => {
         }
 
         setErrors(newErrors);
-        return Object.keys(newErrors).length === 0; // Returns true if there are no errors
+        return Object.keys(newErrors).length === 0;
     };
 
     const handleSubmit = () => {
@@ -86,6 +83,7 @@ const AddressPage = () => {
             console.log('Current Address:', currentAddress);
             console.log('Communication Address:', communicationAddress);
             toast.success('Form submitted successfully!')
+            navigate('/bank')
         }
     };
 
