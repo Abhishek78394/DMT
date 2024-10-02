@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { Box, Container, TextField, Button, Typography, Grid, InputAdornment } from '@mui/material';
 import EmailIcon from '@mui/icons-material/Email';
 import LockIcon from '@mui/icons-material/Lock';
-import { useDispatch } from 'react-redux';
-import { setLoginData } from '../redux/reducers/authReducer';
 import { Link } from 'react-router-dom';
 
 
@@ -13,7 +11,6 @@ const SignIn = () => {
     email: '',
     password: '',
   });
-  const dispatch = useDispatch();
   const [formErrors, setFormErrors] = useState({});
 
   const handleChange = (e) => {
@@ -43,7 +40,6 @@ const SignIn = () => {
     setFormErrors(errors);
     if (Object.keys(errors).length === 0) {
       console.log('Form is valid. Proceed with login.', formValues);
-      dispatch(setLoginData(formValues));
     }
   };
 

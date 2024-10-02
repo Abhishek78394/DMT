@@ -5,8 +5,6 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { store } from "./redux/store";
 import 'react-toastify/dist/ReactToastify.css'; 
 import { ToastContainer } from 'react-toastify';
 
@@ -32,10 +30,8 @@ root.render(
    <ThemeProvider theme={theme}>
     <BrowserRouter>
       <CssBaseline />
-      <Provider store={store}>
       <ToastContainer />
         <App />
-      </Provider>
       </BrowserRouter>
     </ThemeProvider>
   </React.StrictMode>
