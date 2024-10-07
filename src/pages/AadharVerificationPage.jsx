@@ -11,12 +11,11 @@ import OtpModal from "../common/OtpModal";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-
 const AadharVerificationPage = () => {
   const [formValues, setFormValues] = useState({
     aadharNumber: "",
   });
-  const otpCode = 'P-1234'
+  const otpCode = 'P-1234';
   const [formErrors, setFormErrors] = useState({});
   const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -35,29 +34,29 @@ const AadharVerificationPage = () => {
     setFormValues({ ...formValues, aadharNumber: formattedInput }); 
   };
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const errors = {};
-    if(!formValues.aadharNumber){
-        errors.aadharNumber = "Aadhar number is required";
-    } else if(formValues.aadharNumber.length<14){
-        errors.aadharNumber = "Please enter a vaild Aadhar Number";
-    }else{
+    if (!formValues.aadharNumber) {
+      errors.aadharNumber = "Aadhar number is required";
+    } else if (formValues.aadharNumber.length < 14) {
+      errors.aadharNumber = "Please enter a valid Aadhar Number";
+    } else {
       setIsOtpModalOpen(true);
     }   
     setFormErrors(errors);
-
   };
 
-  const handleOtpSubmit = (otpValue) =>{
+  const handleOtpSubmit = (otpValue) => {
     if (otpCode === otpValue) {
-        toast.success("Aadhar verified successfully.");
-        navigate('/address')
-      } else {
-        toast.error("OTP verification failed. Please try again.");
-      }
-  }
+      toast.success("Aadhar verified successfully.");
+      navigate('/address');
+    } else {
+      toast.error("OTP verification failed. Please try again.");
+    }
+  };
+
+  const maskedAadharNumber = `xxxxxxx${formValues.aadharNumber.slice(-4)}`;
 
   return (
     <Box
@@ -144,7 +143,8 @@ const AadharVerificationPage = () => {
         open={isOtpModalOpen}
         otpCode={otpCode}
         handleClose={() => setIsOtpModalOpen(false)}
-        email={'81******40'} // You can customize this if needed
+        email={'81******40'}
+        label={`OTP has been sent to your registered Aadhar number ${maskedAadharNumber}`}
         onSubmit={handleOtpSubmit}
       />
     </Box>

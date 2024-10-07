@@ -48,7 +48,9 @@ const PanRegistration = () => {
     e.preventDefault();
     const isValid = validate();
     if (isValid) {
-      setIsOtpModalOpen(true);
+      // setIsOtpModalOpen(true);
+      toast.success("Pan verified successfully.");
+      navigate('/user-detail')
     }
   };
 
@@ -147,7 +149,7 @@ const PanRegistration = () => {
         open={isOtpModalOpen}
         otpCode={otpCode}
         handleClose={() => setIsOtpModalOpen(false)}
-        email={formValues.pan} // You can customize this if needed
+        email={formValues.pan} 
         onSubmit={handleOtpSubmit}
       />
     </Box>

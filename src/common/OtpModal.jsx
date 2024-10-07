@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Box, Typography, TextField, Button, Grid } from '@mui/material';
 
-const OtpModal = ({ open, handleClose, email, otpCode, onSubmit }) => {
-  // Prefill the first two OTP values
+const OtpModal = ({ open, handleClose, email, otpCode, onSubmit, label }) => {
   const [otp, setOtp] = useState([otpCode[0] || '', otpCode[1] || '', '', '', '', '']);
 
   const handleChange = (element, index) => {
@@ -26,7 +25,7 @@ const OtpModal = ({ open, handleClose, email, otpCode, onSubmit }) => {
 
   const handleSubmit = () => {
     const otpValue = otp.join('');
-    onSubmit(otpValue); // Handle the OTP submission
+    onSubmit(otpValue); 
   };
 
   return (
@@ -42,7 +41,7 @@ const OtpModal = ({ open, handleClose, email, otpCode, onSubmit }) => {
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          width: { xs: '90%', sm: 400, md: 500 },  // Responsive width
+          width: { xs: '90%', sm: 400, md: 500 }, 
           bgcolor: 'background.paper',
           borderRadius: 2,
           boxShadow: 24,
@@ -51,16 +50,17 @@ const OtpModal = ({ open, handleClose, email, otpCode, onSubmit }) => {
         }}
       >
         <Typography id="otp-modal-title" variant="h6" sx={{ marginBottom: 2 }}>
-          Enter the OTP sent to {email}
+         {label}
         </Typography>
 
-        <Grid container spacing={2} justifyContent="center">
+        {/* Align input boxes in a single row */}
+        <Grid container spacing={1} justifyContent="center" direction="row">
           {otp.map((data, index) => (
             <Grid item key={index}>
               <TextField
                 inputProps={{
                   maxLength: 1,
-                  style: { textAlign: 'center', fontSize: '20px' },
+                  style: { textAlign: 'center', fontSize: '16px' },
                   id: `otp-input-${index}`,
                 }}
                 value={data}
