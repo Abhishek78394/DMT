@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Box, Typography, TextField, Button, Grid } from '@mui/material';
 
 const OtpModal = ({ open, handleClose, email, otpCode, onSubmit, label }) => {
   const [otp, setOtp] = useState([otpCode[0] || '', otpCode[1] || '', '', '', '', '']);
+  const [newLabel, setNewLabel] = useState(label || `Enter the OTP sent to ${email}`);
+
+  useEffect(() => {
+    setNewLabel(label || `Enter the OTP sent to ${email}`);
+  }, [label, email]);
 
   const handleChange = (element, index) => {
     if (isNaN(element.value)) return;
@@ -11,7 +16,6 @@ const OtpModal = ({ open, handleClose, email, otpCode, onSubmit, label }) => {
     newOtp[index] = element.value;
     setOtp(newOtp);
 
-    // Auto focus to next input
     if (element.value !== "" && index < otp.length - 1) {
       document.getElementById(`otp-input-${index + 1}`).focus();
     }
@@ -50,10 +54,9 @@ const OtpModal = ({ open, handleClose, email, otpCode, onSubmit, label }) => {
         }}
       >
         <Typography id="otp-modal-title" variant="h6" sx={{ marginBottom: 2 }}>
-         {label}
+         {newLabel}
         </Typography>
 
-        {/* Align input boxes in a single row */}
         <Grid container spacing={1} justifyContent="center" direction="row">
           {otp.map((data, index) => (
             <Grid item key={index}>

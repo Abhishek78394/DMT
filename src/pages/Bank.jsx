@@ -23,7 +23,7 @@ const BankDetails = () => {
   
   const navigate = useNavigate();
 
-  const validateIfscCode = (code) => /^[A-Z]{3}0[A-Z0-9]{6}$/i.test(code);
+  const validateIfscCode = (code) => /^[A-Z]{3}[A-Z0-9]{0,12}$/i.test(code);
 
   const validateForm = () => {
     const errors = {};
